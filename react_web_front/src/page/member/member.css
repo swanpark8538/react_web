@@ -1,0 +1,59 @@
+/*회원 관련한 모든 css파일*/
+
+/*
+메인 색상
+5356FF rgb(83, 86, 255)
+378CE7 rgb(55, 140, 231)
+67C6E3 rgb(103, 198, 227)
+DFF5FF rgb(223, 245, 255)
+
+빨간색
+f44336
+*/
+
+.page-title {
+  text-align: center;
+  color: #378ce7;
+  font-family: ns-black;
+  font-size: 30px;
+  padding: 30px;
+  border-bottom: 2px solid #378ce7;
+  margin-bottom: 20px;
+}
+
+.join-wrap {
+  width: 500px;
+  margin: 0 auto;
+  padding: 30px;
+}
+.join-input-wrap {
+  padding: 15px 0px;
+  display: flex;
+  flex-direction: column;
+}
+.join-input-wrap > div {
+  display: flex;
+  justify-content: space-between; /*메인축 정렬*/
+  align-items: center; /*보조축 정렬*/
+}
+.join-input-wrap > div > .label {
+  width: 30%;
+}
+.join-input-wrap > div > .label > label {
+  font-size: 18px;
+  font-family: ns-b;
+  color: #378ce7;
+}
+.join-input-wrap > div > .input {
+  width: 70%;
+}
+.check-msg {
+  width: 70%;
+  font-size: 13px;
+  color: #f44336;
+  align-self: flex-end;
+}
+
+.join-btn-box {
+  padding: 30px 0px;
+}
