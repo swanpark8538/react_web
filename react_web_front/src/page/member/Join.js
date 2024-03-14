@@ -6,6 +6,9 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
 const Join = () => {
+  //백 서버 주소
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+
   //전송용
   const [memberId, setMemberId] = useState("");
   const [memberPw, setMemberPw] = useState("");
@@ -27,7 +30,7 @@ const Join = () => {
       //정규표현식 만족했을 때 → 중복체크
       setCheckIdMsg("정규표현식 만족. 이제 중복체크 할 예정");
       axios
-        .get("http://192.168.10.35:8888/member/id/" + memberId)
+        .get(backServer + "/member/id/" + memberId)
         .then((res) => {
           if (res.data.message === "duplication") {
             console.log("여기1");
@@ -70,7 +73,7 @@ const Join = () => {
     ) {
       const obj = { memberId, memberPw, memberName, memberPhone };
       axios
-        .post("http://192.168.10.35:8888/member/join", obj) //로그인시에도 post메소드 써야 해서, url에 join 붙임
+        .post(backServer + "/member/join", obj) //로그인시에도 post메소드 써야 해서, url에 join 붙임
         .then((res) => {
           if (res.data.message === "success") {
             navigate("/login");
