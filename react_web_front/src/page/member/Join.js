@@ -7,6 +7,12 @@ import { useNavigate } from "react-router-dom";
 
 const Join = () => {
   //백 서버 주소
+  /*
+  1. react_web_front폴더 아래에 파일명 .env 이거로 파일 하나 생성하고
+  2. 그 파일 안에 다음 내용 입력 : REACT_APP_BACK_SERVER=http://192.168.10.35:8888
+  3. 저기서 서버 주소와 포트 번호는 자기꺼에 맞춰서 수정
+  4. 프로젝트시 저 서버주소로 에러 뜨지 않도록, git에 commit하기 전에 해당 수정목록을 우클릭하고 ignore하기
+  */
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
   //전송용
