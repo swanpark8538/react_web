@@ -11,5 +11,7 @@ public interface MemberDao {
 
 	int insertMember(Member member);
 
+	Member loginMember(Member member);
+
 	
 }

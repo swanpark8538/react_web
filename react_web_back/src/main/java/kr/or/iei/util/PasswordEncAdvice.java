@@ -19,11 +19,9 @@ public class PasswordEncAdvice {
 	
 							  //returnType:int		경로					//Member로 끝나는 모든메소드	(Member객체-주소적어야함)
 	@Pointcut(value="execution (int kr.or.iei.member.model.service.MemberService.*Member(kr.or.iei.member.model.dto.Member))")
-	public void pwEncPointcut() {
-		
-	}
+	public void pwEncPointcut() {}
 	
-	@Before(value="pwEncPointcut()")//전에 동작하라
+	@Before(value="pwEncPointcut()")//pwEncPointcut메소드 실행 전에 동작하라
 	public void pwEncAdvice(JoinPoint jp) {
 		Object[] args = jp.getArgs();//매개변수 가져와!
 		Member member = (Member)args[0];//Member객체로 변경

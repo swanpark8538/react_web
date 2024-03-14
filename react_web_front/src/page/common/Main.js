@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { Input } from "../../component/FormFrm";
-
 const Main = () => {
   return (
     <>

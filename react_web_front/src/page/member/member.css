@@ -21,6 +21,7 @@ f44336
   margin-bottom: 20px;
 }
 
+/*join*/
 .join-wrap {
   width: 500px;
   margin: 0 auto;
@@ -55,5 +56,36 @@ f44336
 }
 
 .join-btn-box {
+  padding: 30px 0px;
+}
+
+/*login*/
+.login-wrap {
+  width: 500px;
+  margin: 0 auto;
+  padding: 30px;
+}
+.login-input-wrap {
+  padding: 15px 0px;
+  display: flex;
+  flex-direction: column;
+}
+.login-input-wrap > div {
+  display: flex;
+  justify-content: space-between; /*메인축 정렬*/
+  align-items: center; /*보조축 정렬*/
+}
+.login-input-wrap > div > .label {
+  width: 30%;
+}
+.login-input-wrap > div > .label > label {
+  font-size: 18px;
+  font-family: ns-b;
+  color: #378ce7;
+}
+.login-input-wrap > div > .input {
+  width: 70%;
+}
+.login-btn-box {
   padding: 30px 0px;
 }
