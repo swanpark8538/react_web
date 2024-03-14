@@ -41,10 +41,10 @@ const HeaderLink = () => {
     <div className="header-link">
       <Link to="/login" title="로그인">
         {/*title속성 : 커서 올리면 속성값 나옴*/}
-        <span class="material-icons">login</span>
+        <span className="material-icons">login</span>
       </Link>
       <Link to="/join" title="회원가입">
-        <span class="material-icons">assignment_ind</span>
+        <span className="material-icons">assignment_ind</span>
       </Link>
     </div>
   );

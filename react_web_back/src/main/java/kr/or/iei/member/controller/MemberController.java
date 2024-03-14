@@ -70,11 +70,11 @@ public class MemberController {
 	@PostMapping(value="/login")
 	public ResponseEntity<ResponseDTO> login(@RequestBody Member requestedMember){
 		Member member = memberService.login(requestedMember);
-		if(member == null) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+		if(member != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}

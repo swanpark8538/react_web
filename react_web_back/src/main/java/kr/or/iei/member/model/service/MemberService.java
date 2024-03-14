@@ -14,7 +14,7 @@ public class MemberService {
 	@Autowired
 	private MemberDao memberDao;
 	@Autowired
-	private BCryptPasswordEncoder encoder;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public Member selectOneMember(String memberId) {
 		return memberDao.selectOneMember(memberId);
@@ -36,8 +36,8 @@ public class MemberService {
 		//BCrypt 객체의 matches(param1, param2)메소드를 활용하면 두 값이 같은지 boolean형으로 리턴함
 		//param1 : 평문값(사용자가 입력한 암호 = 아직 암호화 전)
 		//param2 : 비교대상인 암호화된 값(= DB에 이미 암호화된 값)
-		//param1을 암호화한 값과, 이미 암호화된 값인 param2가 같으면 true
-		if(selectedMember != null && encoder.matches(requestedMember.getMemberPw(), selectedMember.getMemberPw())) {
+		//return : param1을 암호화한 값과, 이미 암호화된 값인 param2가 같으면 true
+		if(selectedMember != null && bCryptPasswordEncoder.matches(requestedMember.getMemberPw(), selectedMember.getMemberPw())) {
 			//일치 확인했다면, 반환할 Member에서 pw의 값을 제거(보안을 위해)
 			selectedMember.setMemberPw(null);
 			return selectedMember;

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import "./member.css";
-import { Button2, Input } from "../../component/FormFrm";
+import { Button1, Button3, Input } from "../../component/FormFrm";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [memberId, setMemberId] = useState("");
@@ -27,9 +27,11 @@ const Login = () => {
         .catch((res) => {
           console.log("에러");
         });
-    } else {
-      Swal.fire("아이디와 비밀번호를 모두 입력해주세요.");
     }
+  };
+
+  const join = () => {
+    navigate("/join");
   };
 
   return (
@@ -37,42 +39,34 @@ const Login = () => {
       <div className="page-title">로그인</div>
 
       <div className="login-input-wrap">
-        <div>
-          <div className="label">
-            <label htmlFor="memberId">아이디</label>
-          </div>
-          <div className="input">
-            <Input
-              type="text"
-              content="memberId"
-              data={memberId}
-              setData={setMemberId}
-            />
-          </div>
-        </div>
+        <label htmlFor="memberId">아이디</label>
+        <Input
+          type="text"
+          content="memberId"
+          data={memberId}
+          setData={setMemberId}
+        />
       </div>
 
       <div className="login-input-wrap">
-        <div>
-          <div className="label">
-            <label htmlFor="memberPw">비밀번호</label>
-          </div>
-          <div className="input">
-            <Input
-              type="text"
-              content="memberPw"
-              data={memberPw}
-              setData={setMemberPw}
-            />
-          </div>
-        </div>
+        <label htmlFor="memberPw">비밀번호</label>
+        <Input
+          type="text"
+          content="memberPw"
+          data={memberPw}
+          setData={setMemberPw}
+        />
       </div>
-      <div className="check">
-        <div className="idCheck">아이디 확인</div>
-        <div className="pwCheck">비밀번호 재발급</div>
+      <div className="login-search-box">
+        <Link to="#">아이디 찾기</Link>
+        <span className="material-icons">horizontal_rule</span>
+        <Link to="#">비밀번호 찾기</Link>
       </div>
       <div className="login-btn-box">
-        <Button2 text="로그인" clickEvent={login} />
+        <Button1 text="로그인" clickEvent={login} />
+      </div>
+      <div className="login-btn-box">
+        <Button3 text="회원가입" clickEvent={join} />
       </div>
     </div>
   );

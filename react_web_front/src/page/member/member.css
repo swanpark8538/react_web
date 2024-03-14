@@ -61,31 +61,37 @@ f44336
 
 /*login*/
 .login-wrap {
-  width: 500px;
+  width: 400px;
   margin: 0 auto;
-  padding: 30px;
 }
+
 .login-input-wrap {
-  padding: 15px 0px;
-  display: flex;
-  flex-direction: column;
+  padding: 10px 0px;
+  margin: 0 auto;
 }
 .login-input-wrap > div {
   display: flex;
   justify-content: space-between; /*메인축 정렬*/
   align-items: center; /*보조축 정렬*/
 }
-.login-input-wrap > div > .label {
-  width: 30%;
-}
-.login-input-wrap > div > .label > label {
-  font-size: 18px;
-  font-family: ns-b;
+.login-input-wrap > label {
+  display: block;
+  padding: 10px 0px;
   color: #378ce7;
+  font-family: ns-b;
 }
-.login-input-wrap > div > .input {
-  width: 70%;
+.login-search-box {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; /*선 위아래 가운데로 맞추려고*/
+  margin: 10px;
+}
+.login-search-box > span {
+  transform: rotate(90deg);
+}
+.login-search-box > a:hover {
+  text-decoration: underline;
 }
 .login-btn-box {
-  padding: 30px 0px;
+  margin: 20px 0px;
 }
