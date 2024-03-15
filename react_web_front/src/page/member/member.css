@@ -95,3 +95,21 @@ f44336
 .login-btn-box {
   margin: 20px 0px;
 }
+
+/*mypage*/
+.mypage-title {
+  padding: 10px 0px;
+  border-bottom: 2px solid #378ce7;
+}
+.mypage-title > span {
+  color: #378ce7;
+  font-size: 24px;
+  font-family: ns-b;
+}
+.mypage-content {
+  display: flex;
+  justify-content: space-between;
+}
+.mypage-current-content {
+  width: 900px;
+}

@@ -5,7 +5,10 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = (props) => {
+  //로그인시 isLogin값 변경 위해 set함수 가져옴
+  const loginFunction = props.login;
+
   //백 서버 주소
   /*
   1. react_web_front폴더 아래에 파일명 .env 이거로 파일 하나 생성하고
@@ -27,6 +30,8 @@ const Login = () => {
         .post(backServer + "/member/login", obj)
         .then((res) => {
           if (res.data.message === "success") {
+            console.log(res.data.data); // = eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJJZCI6InVzZXIwMSIsImlhdCI6MTcxMDQ4MzYzMywiZXhwIjoxNzEwNDg3MjMzfQ.PCcJrZOWUFj1A_3oNf2XGJp2DE2RlSSH8pdykLgNNuM
+            loginFunction(res.data.data); //App.js 에서 속성으로 받아온 login함수 실행
             Swal.fire("로그인 성공");
             navigate("/");
           } else {

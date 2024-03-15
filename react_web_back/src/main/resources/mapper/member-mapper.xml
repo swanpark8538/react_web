@@ -10,7 +10,4 @@
 		insert into member_tbl values(#{memberId}, #{memberPw}, #{memberName}, #{memberPhone}, 2)
 	</insert>
 	
-	<select id="loginMember" resultType="member">
-		select * from member_tbl where member_id = #{memberId}
-	</select>
 </mapper>

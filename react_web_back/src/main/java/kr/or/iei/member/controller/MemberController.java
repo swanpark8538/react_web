@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,14 +69,24 @@ public class MemberController {
 		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
 	})
 	@PostMapping(value="/login")
-	public ResponseEntity<ResponseDTO> login(@RequestBody Member requestedMember){
-		Member member = memberService.login(requestedMember);
-		if(member != null) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+	public ResponseEntity<ResponseDTO> login(@RequestBody Member member){
+		//Member m = memberService.login(member); 토근 쓰기 전에 사용하던 방식
+		String accessToken = memberService.login(member);
+		if(accessToken != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", accessToken);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
+	}
+	
+	@GetMapping
+	public ResponseEntity<ResponseDTO> getMember(@RequestAttribute String memberId){
+		//인터셉터에서 memberId 가져옴(가져오는 과정 엄청 길다... 근데 할만함)
+		Member member = memberService.selectOneMember(memberId);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", member);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		//이미 로그인 성공이므로 여기서 다시 get할땐 실패할 수가 없음.
 	}
 }
