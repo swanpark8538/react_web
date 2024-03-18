@@ -113,3 +113,66 @@ f44336
 .mypage-current-content {
   width: 900px;
 }
+
+/*memberInfo*/
+.mypage-current-title {
+  padding: 30px 0px;
+  color: #378ce7;
+  font-family: ns-b;
+  font-size: 24px;
+}
+.member-info-tbl {
+  width: 100%;
+  border-spacing: 0;
+  padding: 10px;
+  border-top: 2px solid #378ce7;
+  border-bottom: 2px solid #378ce7;
+}
+.member-info-tbl > tbody > tr > td:first-child {
+  width: 30%;
+}
+.member-info-tbl > tbody > tr > td {
+  padding: 20px 10px;
+}
+#member-phone {
+  padding: 0;
+}
+#member-phone > div {
+  display: flex;
+  justify-content: space-between;
+}
+#member-phone > div > input {
+  width: 60%;
+}
+#member-phone > div > button {
+  width: 35%;
+}
+.delete-btn-box {
+  margin-top: 50px;
+}
+
+/*memberPw*/
+.pw-input-wrap {
+  padding: 10px 0px;
+}
+.pw-input-wrap > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+.pw-input-wrap > div > label {
+  color: #5356ff;
+  font-size: 18px;
+  font-family: ns-b;
+  width: 20%;
+}
+.pw-input-wrap > div > input {
+  width: 50%;
+}
+.pw-input-wrap > div > button {
+  width: 20%;
+}
+.pw-input-wrap > div > input#memberPw {
+  width: 75%;
+}

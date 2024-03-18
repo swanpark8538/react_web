@@ -57,4 +57,28 @@ public class MemberService {
 			return null;
 		}
 	}
+
+	@Transactional
+	public int updatePhone(Member member) {
+		return memberDao.updateMember(member);
+	}
+
+	@Transactional
+	public int deleteMember(String memberId) {
+		return memberDao.deleteMember(memberId);
+	}
+
+	public int checkPw(Member member) {
+		Member m = memberDao.selectOneMember(member.getMemberId());
+		if(m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+
+	@Transactional
+	public int changePwMember(Member member) {
+		return memberDao.changePwMember(member);
+	}
 }

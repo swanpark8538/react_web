@@ -15,7 +15,7 @@ const Input = (props) => {
       className="input-form"
       id={content}
       type={type}
-      value={data}
+      value={data || ""} //null이나 undefined일때 콘솔에 에러뜨므로, null이나 undefined이면 빈문자열로 세팅되도록 함
       onChange={changeData}
       onBlur={blurEvent}
     />

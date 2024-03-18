@@ -5,9 +5,9 @@ import Main from "./page/common/Main";
 import Join from "./page/member/Join";
 import Login from "./page/member/Login";
 import { useEffect, useState } from "react";
-import MemberInfo from "./page/member/MemberInfo";
 import axios from "axios";
 import MemberMain from "./page/member/MemberMain";
+import BoardMain from "./page/board/BoardMain";
 
 function App() {
   //새로고침 하면 App.js가 재실행되면서 isLogin 값이 false로 다시 리셋되면서 로그아웃됨.
@@ -23,6 +23,9 @@ function App() {
     //obj가 채워져있다면 거기서 tokenExpired를 가져와서 Date타입으로 형변환
     obj ? new Date(obj.tokenExpired) : ""
   );
+  if (obj) {
+    axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+  }
 
   //로그인 로직 한번에 담은 함수
   const login = (accessToken) => {
@@ -69,6 +72,7 @@ function App() {
       //로그인 되어있으면 → 저장해둔 만료시간을 꺼내서 현재시간과 비교한 후 로그아웃 자동실행 설정
       const remainingTime = expiredTime.getTime() - new Date().getTime();
       setTimeout(logout, remainingTime);
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
     }
   }, []);
 
@@ -80,8 +84,13 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/join" element={<Join />} />
           <Route path="/login" element={<Login login={login} />} />
-          <Route path="/member/*" element={<MemberMain isLogin={isLogin} />} />
+          <Route
+            path="/member/*"
+            element={<MemberMain isLogin={isLogin} logout={logout} />}
+          />
           {/*서브라우팅은 경로에 *(아래 파일들 모두) 또는 **(아래 폴더들 포함해서 모든 파일들)*/}
+
+          <Route path="/board/*" element={<BoardMain isLogin={isLogin} />} />
         </Routes>
       </div>
       <Footer />

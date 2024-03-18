@@ -23,8 +23,8 @@ public class SwaggerConfig {
 	
 	private ApiInfo swaggerInfo() {
 		return new ApiInfoBuilder()
-				.title("PARK's WORLD API")
-				.description("PARK's WORLD Api 문서")
+				.title("Park's WORLD API")
+				.description("Park's WORLD Api 문서")
 				.build();
 	}
 	

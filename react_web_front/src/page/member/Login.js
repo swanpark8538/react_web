@@ -30,7 +30,7 @@ const Login = (props) => {
         .post(backServer + "/member/login", obj)
         .then((res) => {
           if (res.data.message === "success") {
-            console.log(res.data.data); // = eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJJZCI6InVzZXIwMSIsImlhdCI6MTcxMDQ4MzYzMywiZXhwIjoxNzEwNDg3MjMzfQ.PCcJrZOWUFj1A_3oNf2XGJp2DE2RlSSH8pdykLgNNuM
+            //console.log(res.data.data); // = eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJJZCI6InVzZXIwMSIsImlhdCI6MTcxMDQ4MzYzMywiZXhwIjoxNzEwNDg3MjMzfQ.PCcJrZOWUFj1A_3oNf2XGJp2DE2RlSSH8pdykLgNNuM
             loginFunction(res.data.data); //App.js 에서 속성으로 받아온 login함수 실행
             Swal.fire("로그인 성공");
             navigate("/");
