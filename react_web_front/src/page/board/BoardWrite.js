@@ -1,7 +1,13 @@
 import { useState } from "react";
 import BoardFrm from "./BoardFrm";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const BoardWrite = () => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
+
   //insert를 위해 사용자에게 받아야 하는 정보 : 제목, 썸네일, 내용, 첨부파일
   const [boardTitle, setBoardTitle] = useState("");
   const [boardContent, setBoardContent] = useState("");
@@ -14,7 +20,40 @@ const BoardWrite = () => {
 
   //글쓰기 버튼 클릭시 함수
   const write = () => {
-    console.log("게시글 작성 고고");
+    console.log(boardTitle);
+    console.log(boardContent);
+    console.log(thumbnail);
+    console.log(boardFile);
+    if (boardTitle !== "" && boardContent !== "") {
+      //전송용 form객체 생성
+      const form = new FormData();
+      form.append("boardTitle", boardTitle); //키,밸류
+      form.append("boardContent", boardContent);
+      if (thumbnail !== null) {
+        form.append("thumbnail", thumbnail);
+      }
+      for (let i = 0; i < boardFile.length; i++) {
+        form.append("boardFile", boardFile[i]);
+      }
+      axios
+        //주소 : url, 보내는 객체 : form, 파일 설정 객체
+        .post(backServer + "/board", form, {
+          headers: {
+            contentType: "multipart/form-data",
+            processData: false,
+          },
+        })
+        .then((res) => {
+          if (res.data.message === "success") {
+            navigate("/board/list");
+          } else {
+            Swal.fire("문제 발생");
+          }
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
   };
 
   return (

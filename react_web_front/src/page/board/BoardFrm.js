@@ -1,4 +1,5 @@
-import { Input } from "../../component/FormFrm";
+import { Button1, Input } from "../../component/FormFrm";
+import TextEditor from "../../component/TextEditor";
 
 const BoardFrm = (props) => {
   //데이터 전송용(insert를 위해 사용자에게 받아야 하는 정보) : 제목, 썸네일, 내용, 첨부파일
@@ -20,6 +21,8 @@ const BoardFrm = (props) => {
   //글쓰기 버튼 클릭시 함수
   const buttonFunction = props.buttonFunction;
 
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+
   //썸네일 파일 추가시 함수
   const changeThumbnail = (e) => {
     const files = e.currentTarget.files; //버블링이벤트 방지 currentTarget
@@ -36,6 +39,21 @@ const BoardFrm = (props) => {
       setThumbnail(null);
       setBoardImg(null);
     }
+  };
+  //첨부파일 추가시 동작할 함수
+  const changeFile = (e) => {
+    const files = e.currentTarget.files;
+    setBoardFile(files); //전송용
+    //e.currentTarget.files의 FileList는 배열처럼 보이지만 사실 console찍어보면 그냥 file객체들 담은 '객체'임!!!
+    //그래서 map이나 foreach가 안 됨. 배열이 아니어서.
+    //그래서 밑에 return에서 map함수를 통해 화면에 출력하기 위해 file의 name을 넣을 배열을 직접 생성해서
+    //그 배열을 화면출력용 state인 fileList에 넣겠음.
+    //그리고 그 fileList를 map으로 돌려서 화면에 출력하겠음
+    const arr = new Array();
+    for (let i = 0; i < files.length; i++) {
+      arr.push(files[i].name);
+    }
+    setFileList(arr); //화면출력용
   };
 
   return (
@@ -66,7 +84,7 @@ const BoardFrm = (props) => {
               </tr>
               <tr>
                 <td>
-                  <label htmlFor="thumbnail">대표이미지</label>
+                  <label htmlFor="thumbnail">대표이미지(썸네일)</label>
                 </td>
                 <td>
                   <input
@@ -77,11 +95,42 @@ const BoardFrm = (props) => {
                   />
                 </td>
               </tr>
+              <tr>
+                <td>
+                  <label htmlFor="boardFile">첨부파일</label>
+                </td>
+                <td>
+                  <input type="file" onChange={changeFile} multiple />
+                </td>
+              </tr>
+              <tr className="file-list">
+                <td>첨부파일목록</td>
+                <td>
+                  <div className="file-zone">
+                    {fileList.map((item, index) => {
+                      return (
+                        <p key={"newFile" + index}>
+                          <span className="filename">{item}</span>
+                        </p>
+                      );
+                    })}
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div className="board-frm-bottom"></div>
+      <div className="board-frm-bottom">
+        <TextEditor
+          data={boardContent}
+          setData={setBoardContent}
+          url={backServer + "/board/editor"}
+        />
+      </div>
+      <div className="board-frm-btn-box">
+        <Button1 text="작성하기" clickEvent={buttonFunction} />
+      </div>
     </div>
   );
 };

@@ -59,10 +59,19 @@ const BoardList = (props) => {
 
 const BoardItem = (props) => {
   const board = props.board;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
+  const boardView = () => {
+    navigate("/board/view/" + board.boardNo);
+  };
   return (
-    <div className="board-item">
+    <div className="board-item" onClick={boardView}>
       <div className="board-item-img">
-        <img src="/image/default.png" />
+        {board.boardImg === null ? (
+          <img src="/image/default.png" />
+        ) : (
+          <img src={backServer + "/board/thumbnail/" + board.boardImg} />
+        )}
       </div>
       <div className="board-item-info">
         <div className="board-item-title">{board.boardTitle}</div>
