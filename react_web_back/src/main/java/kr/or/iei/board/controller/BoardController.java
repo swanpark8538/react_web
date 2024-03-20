@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -152,6 +154,50 @@ public class BoardController {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@PatchMapping
+	public ResponseEntity<ResponseDTO> modifyBoard
+	(@ModelAttribute Board board,
+	 @ModelAttribute MultipartFile thumbnail,
+	 @ModelAttribute MultipartFile[] boardFile){
+		//MultipartFile 타입으로 데이터가 전송되면 @ModelAttribute로 받으면 됨
+		String savepath = root +"/board/";
+		if(board.getThumbnailCheck() == 1) {//썸네일이 변경된 경우
+			if(thumbnail != null) {//새로 첨부한 경우 -> 업로드
+				String filepath = fileUtils.upload(savepath, thumbnail);
+				board.setBoardImg(filepath);
+			}else {//기존 썸네일을 지우기만 한 경우 -> 썸네일 삭제
+				board.setBoardImg(null);
+			}
+		}
+		//추가 첨부파일 작업
+		ArrayList<BoardFile> fileList = new ArrayList<BoardFile>();
+		if(boardFile != null) {
+			for(MultipartFile file : boardFile) {
+				String filename = file.getOriginalFilename();
+				String filepath = fileUtils.upload(savepath, file);
+				BoardFile bf = new BoardFile();
+				bf.setFilename(filename);
+				bf.setFilepath(filepath);
+				bf.setBoardNo(board.getBoardNo());//삭제와 달리 수정에는 boardNo가 이미 있으므로, 미리 세팅해놓음
+				fileList.add(bf);
+			}
+		}
+		//DB작업 : 파일 업데이트 후, 삭제할 물리적 파일을 지우기 위해 List로 리턴받음
+		List<BoardFile> delFileList = boardService.updateBoard(board, fileList);
+		if(delFileList != null) {//성공
+			//물리적 파일 삭제
+			for(BoardFile bf : delFileList) {
+				File file = new File(savepath + bf.getFilepath());
+				file.delete();
+			}
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {//실패
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}

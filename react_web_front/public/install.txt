@@ -4,5 +4,9 @@ npm install axios
 npm install sweetalert2
 
 2024-03-19
-npm install react-quill --React용 텍스트에디터 중 하나
-npm install quill-image-resize-module-react -- 사진첨부하고 이미지크기 조정하기 위해
+npm install react-quill   --React용 텍스트에디터 중 하나
+npm install quill-image-resize-module-react   -- 사진첨부하고 이미지크기 조정하기 위해
+
+2024-03-20
+npm install @mui/material @emotion/react @emotion/styled    --MUI Default installation
+npm install @mui/material @mui/styled-engine-sc styled-components   --MUI With styled-components

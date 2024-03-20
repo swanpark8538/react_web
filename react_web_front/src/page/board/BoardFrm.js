@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button1, Input } from "../../component/FormFrm";
 import TextEditor from "../../component/TextEditor";
 
@@ -21,12 +22,25 @@ const BoardFrm = (props) => {
   //글쓰기 버튼 클릭시 함수
   const buttonFunction = props.buttonFunction;
 
+  //수정하기에서만 받아오는 데이터
+  const type = props.type;
+  const delFileNo = props.delFileNo;
+  const setDelFileNo = props.setDelFileNo;
+  const thumbnailCheck = props.thumbnailCheck;
+  const setThumbnailCheck = props.setThumbnailCheck;
+
   const backServer = process.env.REACT_APP_BACK_SERVER;
+
+  //첨부파일을 추가하면 화면에 보여줄 state
+  const [newFileList, setNewFileList] = useState([]);
 
   //썸네일 파일 추가시 함수
   const changeThumbnail = (e) => {
     const files = e.currentTarget.files; //버블링이벤트 방지 currentTarget
     if (files.length !== 0 && files[0] != 0) {
+      if (type === "modify") {
+        setThumbnailCheck(1);
+      }
       setThumbnail(files[0]); //전송용 state에 file객체 세팅
       //화면에 썸네일 미리보기 세팅
       const reader = new FileReader();
@@ -53,7 +67,7 @@ const BoardFrm = (props) => {
     for (let i = 0; i < files.length; i++) {
       arr.push(files[i].name);
     }
-    setFileList(arr); //화면출력용
+    setNewFileList(arr); //화면출력용
   };
 
   return (
@@ -62,6 +76,8 @@ const BoardFrm = (props) => {
         <div className="board-thumbnail">
           {boardImg === null ? (
             <img src="/image/default.png" />
+          ) : type === "modify" && thumbnailCheck === 0 ? (
+            <img src={backServer + "/board/thumbnail/" + boardImg} />
           ) : (
             <img src={boardImg} />
           )}
@@ -107,7 +123,22 @@ const BoardFrm = (props) => {
                 <td>첨부파일목록</td>
                 <td>
                   <div className="file-zone">
-                    {fileList.map((item, index) => {
+                    {type === "modify"
+                      ? fileList.map((file, index) => {
+                          return (
+                            <FileItem
+                              key={"oldFile" + index}
+                              file={file}
+                              fileList={fileList}
+                              setFileList={setFileList}
+                              delFileNo={delFileNo}
+                              setDelFileNo={setDelFileNo}
+                            />
+                          );
+                        })
+                      : ""}
+
+                    {newFileList.map((item, index) => {
                       return (
                         <p key={"newFile" + index}>
                           <span className="filename">{item}</span>
@@ -129,9 +160,48 @@ const BoardFrm = (props) => {
         />
       </div>
       <div className="board-frm-btn-box">
-        <Button1 text="작성하기" clickEvent={buttonFunction} />
+        <Button1
+          text={type === "modify" ? "수정하기" : "작성하기"}
+          clickEvent={buttonFunction}
+        />
       </div>
     </div>
+  );
+};
+
+const FileItem = (props) => {
+  const file = props.file;
+  const fileList = props.fileList;
+  const setFileList = props.setFileList;
+  const delFileNo = props.delFileNo;
+  const setDelFileNo = props.setDelFileNo;
+
+  const deleteFile = () => {
+    //delFileNo배열에 현재 파일번호 추가 -> 컨트롤러로 전송해서 작업해야 하므로
+    setDelFileNo([...delFileNo, file.boardFileNo]);
+    //화면에서 파일 삭제 : fileList에서 해당 file을 제거
+    /*
+    const copyFileList = new Array();
+    for (let i = 0; i < fileList.length; i++) {
+      if (fileList[i] !== file) {
+        copyFileList.push(fileList[i]);
+      }
+    }
+    setFileList(copyFileList);
+    */
+    const newFileList = fileList.filter((item, index) => {
+      return item !== file;
+    });
+    setFileList(newFileList);
+  };
+
+  return (
+    <p>
+      <span className="filename">{file.filename}</span>
+      <span className="material-icons del-file-icon" onClick={deleteFile}>
+        delete
+      </span>
+    </p>
   );
 };
 

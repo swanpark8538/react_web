@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import MemberMain from "./page/member/MemberMain";
 import BoardMain from "./page/board/BoardMain";
+import AdminMain from "./page/admin/AdminMain";
 
 function App() {
   //새로고침 하면 App.js가 재실행되면서 isLogin 값이 false로 다시 리셋되면서 로그아웃됨.
@@ -91,6 +92,7 @@ function App() {
           {/*서브라우팅은 경로에 *(아래 파일들 모두) 또는 **(아래 폴더들 포함해서 모든 파일들)*/}
 
           <Route path="/board/*" element={<BoardMain isLogin={isLogin} />} />
+          <Route path="/admin/*" element={<AdminMain />} />
         </Routes>
       </div>
       <Footer />

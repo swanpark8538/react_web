@@ -67,6 +67,53 @@ public class BoardService {
 			return null;
 		}
 	}
+
+	@Transactional
+	public List<BoardFile> updateBoard(Board board, ArrayList<BoardFile> fileList) {
+		List<BoardFile> delFileList = new ArrayList<BoardFile>();
+		int result = 0;
+		int delFileCount = 0;
+		//삭제한 파일이 있으면
+		if(board.getDelFileNo() != null) {
+			delFileCount = board.getDelFileNo().length;
+			//리턴할 delFileList 먼저 select
+			delFileList = boardDao.selectBoardFile(board.getDelFileNo());
+			//조회 다 했으니 이제 삭제
+			result += boardDao.deleteBoardFile(board.getDelFileNo());
+		}
+		//추가한 파일이 있으면
+		for(BoardFile bf : fileList) {
+			//DB에 등록
+			result += boardDao.insertBoardFile(bf);
+		}
+		//업데이트
+		result += boardDao.updateBoard(board);
+		if(result == 1+fileList.size()+delFileCount) {
+			return delFileList;
+		}else {
+			return null;
+		}
+	}
+	
+	///////////////////////////////////////////////////////
+	//admin
+
+	public Map adminBoardList(int reqPage) {
+		int numPerPage = 10;
+		int pageNaviSize = 5;
+		int totalCount = boardDao.adminTotalCount();
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list = boardDao.adminBoardList(pi);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("boardList", list);
+		map.put("pi", pi);
+		return map;
+	}
+
+	@Transactional
+	public int changeBoardStatus(Board board) {
+		return boardDao.changeBoardStatus(board);
+	}
 	
 	
 }

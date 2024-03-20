@@ -11,9 +11,8 @@ const BoardWrite = () => {
   //insert를 위해 사용자에게 받아야 하는 정보 : 제목, 썸네일, 내용, 첨부파일
   const [boardTitle, setBoardTitle] = useState("");
   const [boardContent, setBoardContent] = useState("");
-  const [thumbnail, setThumbnail] = useState(null); //board_file테이블이니까 변수명 다르게
-  const [boardFile, setBoardFile] = useState([]); //board_file테이블이니까 변수명 다르게
-
+  const [thumbnail, setThumbnail] = useState(null); //썸네일. board_file테이블이니까 변수명 다르게
+  const [boardFile, setBoardFile] = useState([]); //첨부파일. board_file테이블이니까 변수명 다르게
   //사용자 화면 출력용
   const [boardImg, setBoardImg] = useState(null); //썸네이 미리보기용
   const [fileList, setFileList] = useState([]); //첨부파일 미리보기용

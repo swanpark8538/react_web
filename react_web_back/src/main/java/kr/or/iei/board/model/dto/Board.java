@@ -25,4 +25,7 @@ public class Board {
 	private String boardDate;
 	
 	private List fileList;//BOARD_FILE 테이블(첨부파일)
+	
+	private int[] delFileNo;//수정시
+	private int thumbnailCheck;//수정시
 }
