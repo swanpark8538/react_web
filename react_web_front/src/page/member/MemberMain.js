@@ -4,6 +4,7 @@ import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import SideMenu from "../../component/SideMenu";
 import MemberInfo from "./MemberInfo";
 import MemberPw from "./MemberPw";
+import MemberChat from "./MemberChat";
 
 const MemberMain = (props) => {
   const isLogin = props.isLogin;
@@ -34,6 +35,7 @@ const MemberMain = (props) => {
     { url: "info", text: "내 정보", active: true },
     { url: "pw", text: "비밀번호 변경", active: false },
     { url: "board", text: "작성글 보기", active: false },
+    { url: "chat", text: "전체 채팅", active: false },
   ]);
 
   return (
@@ -57,6 +59,10 @@ const MemberMain = (props) => {
               element={<MemberInfo member={member} logout={logout} />}
             />
             <Route path="/pw" element={<MemberPw />} />
+            <Route
+              path="/chat"
+              element={<MemberChat memberId={member.memberId} />}
+            />
           </Routes>
         </div>
       </div>
